@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+    <h4 class="text-center">Posts Social Media</h4>
+
+    <form action="" method="get">
+        {{ form.as_table }}
+        <input type="submit" value="Search" class="btn btn-primary">
+    </form>
+
+    <br>
+    <div class="card">
+        {% for post in posts %}
+            <a href="{{ post.get_absolute_url }}" class="card-body">{{ post.body|truncatewords:8 }}</a>
+        {% endfor %}
+    </div>
+{% endblock %}

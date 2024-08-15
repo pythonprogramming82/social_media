@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+    <h2 class="text-center">{{ user.username }}</h2>
+    <br>
+    {% if request.user.id == user.id %}
+    <a href="{% url 'home:post_creat' %}" class="btn btn-primary">Creat</a>
+    <a href="{% url 'accounts:edit_profile' %}" class="btn btn-info">Edit Profile</a>
+    {% endif %}
+
+    {% if request.user.id != user.id and not is_following %}
+        <a class="btn btn-primary" href="{% url 'accounts:user_follow' user.id %}">Follow</a>
+    
+    {% elif request.user.id != user.id and is_following %}
+        <a class="btn btn-primary" href="{% url 'accounts:user_unfollow' user.id %}">Unfollow</a>
+
+    {% endif %}
+
+    <div class="card">
+        {% for post in posts %}
+            <a href="{{ post.get_absolute_url }}" class="card-body">{{ post.body|truncatewords:8 }}</a>
+        {% endfor %}
+    </div>
+{% endblock %} 
