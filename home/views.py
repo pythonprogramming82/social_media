@@ -8,6 +8,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from .forms import PostCreatUpdateForm, CreatFormComment, CommentReolyForm, SearchForm
 from django.utils.text import slugify
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 # Create your views here.
 
@@ -37,7 +39,8 @@ class PostDetailView(View):
         return render(request, "home/detail.html", {"post":self.post_instance, "comments":comments,
              "form":self.from_class, "reply_form":self.form_class_reply, "can_like":can_like})
     
-
+    
+    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         form = self.from_class(request.POST)
         if form.is_valid():

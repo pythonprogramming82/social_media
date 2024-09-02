@@ -1,7 +1,7 @@
 from typing import Any
 from django.http import HttpRequest
 from django.http.response import HttpResponse as HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from . forms import UserRegisterForm, UserLoginForm, EditUserProfile
 from django.contrib.auth.models import User
@@ -52,6 +52,7 @@ class UserLoginView(View):
         if request.user.is_authenticated:
             return redirect("home:home")
         return super().dispatch(request, *args, **kwargs)
+
 
     def get(self, request):
         form = self.form_class()
